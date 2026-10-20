@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML и редактор кода: старт без страха</title>
+    <style>
+      :root {
+        --bg-color: #f4f7fb;
+        --slide-bg: #ffffff;
+        --text-color: #2d3440;
+        --accent: #5c6cd9;
+        --accent-light: #c5ccff;
+        --code-bg: #f0f4f8;
+        --border: #e0e5ec;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+
+      .carousel-container {
+        max-width: 960px;
+        margin: 40px auto;
+        position: relative;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        background: var(--slide-bg);
+        transform: perspective(1000px);
+      }
+
+      .slide {
+        display: none;
+        padding: 56px 48px;
+        min-height: 540px;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.4s ease,
+          transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      .slide.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 8px;
+        color: var(--text-color);
+      }
+
+      h2 {
+        font-size: 20px;
+        margin-top: 24px;
+        margin-bottom: 12px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      p,
+      li {
+        line-height: 1.6;
+      }
+
+      ul {
+        margin-top: 12px;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        overflow-x: auto;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 14px;
+        text-align: left;
+      }
+
+      th {
+        background-color: var(--code-bg);
+        font-weight: 600;
+      }
+
+      pre {
+        background-color: var(--code-bg);
+        padding: 18px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        overflow-x: auto;
+        margin: 16px 0;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.03);
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+        color: #d63384;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        background-color: var(--bg-color);
+        border-top: 1px solid var(--border);
+      }
+
+      button {
+        cursor: pointer;
+        padding: 10px 18px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+
+      .btn-prev {
+        background-color: transparent;
+        color: var(--text-color);
+      }
+      .btn-next {
+        background-color: var(--accent);
+        color: white;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(92, 108, 217, 0.25);
+      }
+
+      .indicator {
+        display: flex;
+        gap: 10px;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--border);
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+      }
+
+      .dot.active {
+        background-color: var(--accent);
+        transform: scale(1.2);
+      }
+
+      /* Декоративные элементы для WOW-эффекта */
+      .floating-shape {
+        position: absolute;
+        top: -50px;
+        right: -40px;
+        width: 160px;
+        height: 160px;
+        background: var(--accent-light);
+        border-radius: 50%;
+        filter: blur(20px);
+        opacity: 0.6;
+        pointer-events: none;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(15px, -15px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel-container">
+      <!-- Слайд 1: Титульный -->
+      <div class="slide active">
+        <div class="floating-shape"></div>
+        <h1>HTML и редактор кода:<br />старт без страха</h1>
+        <p>
+          Ты никогда не писал код? Это нормально. Сегодня мы сделаем первую
+          веб‑страницу и поймём, как работает редактор кода.
+        </p>
+        <ul>
+          <li>Сначала — про редактор кода: без паники.</li>
+          <li>Потом — про HTML: как это вообще устроено.</li>
+          <li>В конце — украсим страницу простыми стилями.</li>
+        </ul>
+      </div>
+
+      <!-- Слайд 2: Редактор кода VS Code -->
+      <div class="slide">
+        <h1>Знакомься: редактор кода</h1>
+        <p>
+          VS Code — это не «страшная консоль», а просто продвинутый блокнот. У
+          него есть подсказки, автодополнение и форматирование.
+        </p>
+        <h2>Что ты видишь на экране</h2>
+        <ul>
+          <li>
+            <strong>Слева:</strong> панель файлов — как папки на компьютере.
+          </li>
+          <li><strong>Центр:</strong> редактор — тут ты пишешь код.</li>
+          <li>
+            <strong>Внизу:</strong> статус-бар — показывает, что происходит.
+          </li>
+        </ul>
+        <p>
+          Самое крутое: начни печатать <code>&lt;h</code>, и VS Code сам
+          подскажет: «ты хочешь <code>&lt;h1&gt;</code>?»
+        </p>
+        <pre>
+&lt;!-- Просто начни печатать, и подсказки сами появятся --&gt;
+&lt;h1&gt;Привет&lt;/h1&gt;</pre
+        >
+      </div>
+
+      <!-- Слайд 3: Первые шаги в VS Code -->
+      <div class="slide">
+        <h1>Делаем первые шаги</h1>
+        <ol>
+          <li>Создай папку <code>my-first-page</code>.</li>
+          <li>Внутри создай файл <code>index.html</code>.</li>
+          <li>Сохрани его (Ctrl+S / Cmd+S).</li>
+          <li>Открой файл в браузере — просто перетащи его в окно браузера.</li>
+        </ol>
+        <p>
+          Это всё. Теперь у тебя есть файл, который браузер может прочитать.
+        </p>
+      </div>
+
+      <!-- Слайд 4: Что такое HTML -->
+      <div class="slide">
+        <h1>Что такое HTML?</h1>
+        <p>
+          HTML — это разметка текста. Представь, что ты помечаешь текст
+          ярлыками: «это заголовок», «это абзац», «это картинка». Браузер читает
+          эти ярлыки и красиво отображает страницу.
+        </p>
+        <h2>Как это выглядит</h2>
+        <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Моя первая страница&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Привет, это моя страница!&lt;/h1&gt;
+    &lt;p&gt;Это абзац текста.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre
+        >
+        <p>
+          Каждый тег — это ярлык. Например, <code>&lt;h1&gt;</code> — самый
+          важный заголовок, <code>&lt;p&gt;</code> — абзац.
+        </p>
+      </div>
+
+      <!-- Слайд 5: История HTML -->
+      <div class="slide">
+        <h1>Кто и зачем придумал HTML?</h1>
+        <p>
+          HTML придумал <strong>Тим Бернерс‑Ли</strong> в начале 1990‑х годов.
+          Он работал в CERN и хотел, чтобы учёные могли легко обмениваться
+          документами через интернет.
+        </p>
+        <h2>Почему HTML?</h2>
+        <p>
+          Аббревиатура <strong>HTML</strong> расшифровывается как
+          <strong>HyperText Markup Language</strong> — «язык разметки
+          гипертекста».
+        </p>
+        <ul>
+          <li>
+            <strong>HyperText</strong> — значит, что можно делать ссылки и
+            переходить между документами.
+          </li>
+          <li>
+            <strong>Markup</strong> — разметка: мы помечаем, где заголовок, где
+            абзац, где картинка.
+          </li>
+          <li>
+            <strong>Language</strong> — язык: набор правил, которые понимает
+            браузер.
+          </li>
+        </ul>
+        <p>
+          То есть HTML — это способ сказать браузеру: «вот тут ссылка, вот тут
+          картинка, а вот тут — список».
+        </p>
+      </div>
+
+      <!-- Слайд 6: Базовые теги -->
+      <div class="slide">
+        <h1>Самые нужные теги</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Тег</th>
+              <th>Что делает</th>
+              <th>Пример</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;h1&gt;</code></td>
+              <td>Главный заголовок</td>
+              <td><code>&lt;h1&gt;О нас&lt;/h1&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;p&gt;</code></td>
+              <td>Абзац текста</td>
+              <td><code>&lt;p&gt;Мы делаем классные сайты.&lt;/p&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;ul&gt; + &lt;li&gt;</code></td>
+              <td>Список</td>
+              <td>
+                <code>&lt;ul&gt;&lt;li&gt;Пункт 1&lt;/li&gt;&lt;/ul&gt;</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>&lt;a&gt;</code></td>
+              <td>Ссылка</td>
+              <td>
+                <code>&lt;a href="https://example.com"&gt;Сайт&lt;/a&gt;</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>&lt;img&gt;</code></td>
+              <td>Картинка</td>
+              <td><code>&lt;img src="cat.jpg" alt="Кот"&gt;</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Слайд 7: Практика -->
+      <div class="slide">
+        <h1>Практика: собираем страницу</h1>
+        <p>
+          Давай прямо сейчас соберём простую страницу. Скопируй этот код в свой
+          <code>index.html</code>:
+        </p>
+        <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Моя страница&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Добро пожаловать!&lt;/h1&gt;
+    &lt;p&gt;Это моя первая страница на HTML.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Я учусь писать код&lt;/li&gt;
+      &lt;li&gt;Мне нравится видеть результат&lt;/li&gt;
+      &lt;li&gt;Скоро я сделаю что-то крутое&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre
+        >
+        <p>
+          Сохрани файл, обнови страницу в браузере — и ты увидишь результат!
+        </p>
+      </div>
+
+      <!-- Слайд 8: Инлайн-стили -->
+      <div class="slide">
+        <h1>Украшаем страницу</h1>
+        <p>
+          Чтобы страница выглядела красивее, можно добавить стили прямо в теги.
+          Это называется <strong>инлайн‑стили</strong>. Они удобны для быстрых
+          тестов.
+        </p>
+        <pre>
+&lt;div style="background-color: #f5f8ff; padding: 24px; border-radius: 12px;"&gt;
+  &lt;h2&gt;Красивый блок&lt;/h2&gt;
+  &lt;p&gt;Здесь можно написать что-то важное.&lt;/p&gt;
+  &lt;button style="background-color: #5c6cd9; color: white; border: none; padding: 10px 20px; border-radius: 6px;"&gt;Нажми меня&lt;/button&gt;
+&lt;/div&gt;</pre
+        >
+        <p>Попробуй поменять цвета и посмотреть, как меняется страница.</p>
+      </div>
+
+      <!-- Слайд 9: Задание -->
+      <div class="slide">
+        <h1>Мини‑задание</h1>
+        <p>Сделай свой мини‑блок:</p>
+        <ol>
+          <li>Добавь заголовок и абзац.</li>
+          <li>Сделай список из 3 пунктов.</li>
+          <li>
+            Вставь картинку (можно взять любую из интернета и вставить URL в
+            <code>src</code>).
+          </li>
+          <li>
+            Оформи блок с помощью инлайн‑стилей: фон, отступы, рамка, кнопка.
+          </li>
+        </ol>
+        <p>
+          Когда закончишь — посмотри на результат в браузере. Ты только что
+          сделал свою первую веб‑страницу!
+        </p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-prev" id="prevBtn">← Назад</button>
+      <div class="indicator" id="dots"></div>
+      <button class="btn btn-next" id="nextBtn">Вперёд →</button>
+    </div>
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+      const dotsContainer = document.getElementById("dots");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let currentSlide = 0;
+
+      // Создаём точки-индикаторы
+      slides.forEach((_, index) => {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        if (index === 0) dot.classList.add("active");
+        dot.addEventListener("click", () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+      });
+
+      const dots = document.querySelectorAll(".dot");
+
+      function updateDots() {
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentSlide);
+        });
+      }
+
+      function goToSlide(index) {
+        // Защита от выхода за границы + зацикливание
+        if (index >= slides.length) {
+          currentSlide = 0;
+        } else if (index < 0) {
+          currentSlide = slides.length - 1;
+        } else {
+          currentSlide = index;
+        }
+
+        // Убираем класс active у всех слайдов
+        slides.forEach((slide) => slide.classList.remove("active"));
+        // Добавляем текущему
+        slides[currentSlide].classList.add("active");
+
+        updateDots();
+      }
+
+      prevBtn.addEventListener("click", () => goToSlide(currentSlide - 1));
+      nextBtn.addEventListener("click", () => goToSlide(currentSlide + 1));
+
+      // Управление стрелками клавиатуры
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") {
+          goToSlide(currentSlide - 1);
+        } else if (e.key === "ArrowRight") {
+          goToSlide(currentSlide + 1);
+        }
+      });
+    </script>
+  </body>
+</html>
